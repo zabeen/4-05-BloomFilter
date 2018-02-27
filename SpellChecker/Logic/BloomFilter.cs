@@ -6,17 +6,19 @@ using System.Text;
 
 namespace SpellChecker.Logic
 {
-    public interface IBitmap
+    public interface IBloomFilter
     {
         bool[] Bitmap { get; }
+        IEnumerable<int> Write(string value);
+        bool Verify(string value);
     }
 
-    public class BloomFilter : IBitmap
+    public class BloomFilter : IBloomFilter
     {
         public bool[] Bitmap { get; }
         private readonly int _hashCount;
 
-        public BloomFilter(int bitmapSize, int hashCount = 5)
+        public BloomFilter(int bitmapSize, int hashCount)
         {
             Bitmap = new bool[bitmapSize];
             _hashCount = hashCount;

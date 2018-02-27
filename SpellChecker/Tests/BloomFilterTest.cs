@@ -8,8 +8,8 @@ namespace SpellChecker.Tests
     public class BloomFilterTest
     {
         private IBloomFilter _filter;
-        private const int BitmapSize = byte.MaxValue;
-        private const int HashCount = 5;
+        private const int BitmapSize = 100;
+        private const int HashCount = 2;
 
         [SetUp]
         public void BloomFilterSetup()

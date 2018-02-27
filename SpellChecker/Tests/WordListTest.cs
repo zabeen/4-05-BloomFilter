@@ -1,9 +1,8 @@
-﻿using SpellChecker.Logic;
+﻿using NUnit.Framework;
+using SpellChecker.Logic;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using NUnit.Framework;
 
 namespace SpellChecker.Tests
 {

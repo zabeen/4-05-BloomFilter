@@ -45,9 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\BloomFilter.cs" />
     <Compile Include="Logic\WordList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\BitmapTest.cs" />
     <Compile Include="Tests\WordListTest.cs" />
   </ItemGroup>
   <ItemGroup>

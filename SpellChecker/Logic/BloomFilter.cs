@@ -9,7 +9,7 @@ namespace SpellChecker.Logic
     public interface IBloomFilter
     {
         bool[] Bitmap { get; }
-        IEnumerable<int> Write(string value);
+        IEnumerable<byte> Write(string value);
         bool Verify(string value);
     }
 
@@ -17,14 +17,21 @@ namespace SpellChecker.Logic
     {
         public bool[] Bitmap { get; }
         private readonly int _hashCount;
+        private const int MaxHashCount = 16;
 
-        public BloomFilter(int bitmapSize, int hashCount)
+        public BloomFilter(int bitmapSize = byte.MaxValue, int hashCount = 5)
         {
+            if (bitmapSize < byte.MaxValue)
+                throw new ArgumentException($"{nameof(bitmapSize)} size must be >= {byte.MaxValue}.");
+
+            if (hashCount < 1 || hashCount > MaxHashCount)
+                throw new ArgumentException($"{nameof(hashCount)} must be between 1 and {MaxHashCount}.");
+
             Bitmap = new bool[bitmapSize];
             _hashCount = hashCount;
         }
 
-        public IEnumerable<int> Write(string value)
+        public IEnumerable<byte> Write(string value)
         {
             var hashes = GetHashIndexes(value).ToList();
             hashes.ForEach(h => Bitmap[h] = true);
@@ -33,18 +40,14 @@ namespace SpellChecker.Logic
 
         public bool Verify(string value)
         {
-            return GetHashIndexes(value).All(i => Bitmap[i]);
+            var hashes = GetHashIndexes(value);
+            return hashes.All(i => Bitmap[i]);
         }
 
-        private IEnumerable<int> GetHashIndexes(string value)
+        private IEnumerable<byte> GetHashIndexes(string value)
         {
-            var byteArray = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(value));
-
-            // source: https://stackoverflow.com/a/5896716
-            var result = new int[byteArray.Length / sizeof(int)];
-            Buffer.BlockCopy(byteArray, 0, result, 0, result.Length);
-
-            return result.Take(_hashCount);
+            var byteArray = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(value)).ToList();
+            return byteArray.Where(i => i < Bitmap.Length).Take(_hashCount);
         }
     }
 }

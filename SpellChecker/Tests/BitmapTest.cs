@@ -7,28 +7,33 @@ namespace SpellChecker.Tests
     [TestFixture]
     public class BitmapTest
     {
+        private readonly IBitmap _filter;
+        const int Size = 10;
+
+        public BitmapTest()
+        {
+           _filter = new BloomFilter(Size);
+        }
+
         [Test]
         public void BitmapInitialisedCorrectly()
         {
-            const int size = 10;
-            var filter = new BloomFilter(size);
-            Assert.AreEqual(size, filter.Bitmap.Length);
-            Assert.IsTrue(filter.Bitmap.All(bit => bit == false));
+            Assert.AreEqual(Size, _filter.Bitmap.Length);
+            Assert.IsTrue(_filter.Bitmap.All(bit => bit == false));
         }
 
         [Test]
         public void BitValueCanBeChangedByIndex()
         {
-            var filter = new BloomFilter(10);
             const int index = 1;
 
-            Assert.IsFalse(filter.Bitmap[index]);
+            Assert.IsFalse(_filter.Bitmap[index]);
 
-            filter.Bitmap[index] = true;
-            Assert.IsTrue(filter.Bitmap[index]);
+            _filter.Bitmap[index] = true;
+            Assert.IsTrue(_filter.Bitmap[index]);
 
-            filter.Bitmap[index] = false;
-            Assert.IsFalse(filter.Bitmap[index]);
+            _filter.Bitmap[index] = false;
+            Assert.IsFalse(_filter.Bitmap[index]);
         }
     }
 }

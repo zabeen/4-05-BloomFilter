@@ -6,7 +6,12 @@ using System.Text;
 
 namespace SpellChecker.Logic
 {
-    public class BloomFilter
+    public interface IBitmap
+    {
+        bool[] Bitmap { get; }
+    }
+
+    public class BloomFilter : IBitmap
     {
         public bool[] Bitmap { get; }
         private readonly int _hashCount;

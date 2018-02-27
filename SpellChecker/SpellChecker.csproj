@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\BloomFilter.cs" />
+    <Compile Include="Logic\SpellCheck.cs" />
     <Compile Include="Logic\WordList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BloomFilterTest.cs" />
+    <Compile Include="Tests\SpellCheckerTest.cs" />
     <Compile Include="Tests\WordListTest.cs" />
   </ItemGroup>
   <ItemGroup>

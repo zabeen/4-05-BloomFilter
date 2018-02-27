@@ -4,7 +4,12 @@ using System.IO;
 
 namespace SpellChecker.Logic
 {
-    public class WordList
+    public interface IWordList
+    {
+        IEnumerable<string> Words { get; }
+    }
+
+    public class WordList : IWordList
     {
         public IEnumerable<string> Words { get; }
 

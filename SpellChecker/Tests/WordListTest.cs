@@ -9,6 +9,8 @@ namespace SpellChecker.Tests
     [TestFixture]
     public class WordListTest
     {
+        private IWordList _wordList;
+
         [Test]
         public void WordFileSuccessfullyImportedWhenValidPathProvided()
         {
@@ -16,8 +18,8 @@ namespace SpellChecker.Tests
             Assert.DoesNotThrow(() =>
             {
                 var validPath = $"{TestContext.CurrentContext.TestDirectory}\\Tests\\words.txt";
-                var wordList = new WordList(validPath);
-                words = wordList.Words.ToList();
+                _wordList = new WordList(validPath);
+                words = _wordList.Words.ToList();
             });
 
             Assert.IsTrue(words.Count > 0);
@@ -29,7 +31,7 @@ namespace SpellChecker.Tests
             Assert.Throws<FileNotFoundException>(() =>
             {
                 var invalidPath = $"{TestContext.CurrentContext.TestDirectory}\\Tests\\foobar.txt";
-                var wordList = new WordList(invalidPath);
+                _wordList = new WordList(invalidPath);
             });
         }
     }
